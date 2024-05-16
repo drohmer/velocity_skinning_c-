@@ -121,8 +121,15 @@ void scene_model::velocity_skinning(float magnitude)
     for(size_t joint=0; joint<N_joint; ++joint)
     {
         vec3 const& p_joint = skeleton_speed_per_joint.data[joint].center;
-        vec3 const& linear_speed = (skeleton_speed_per_joint.data[joint].linear_speed / timer_skeleton.scale + skeleton_fake_speed_per_joint.data[joint].linear_speed);
-        vec3 const& angular_speed = (skeleton_speed_per_joint.data[joint].angular_speed / timer_skeleton.scale + skeleton_fake_speed_per_joint.data[joint].angular_speed);
+        vec3 const& linear_speed = (skeleton_joint_speed[joint].avg_acceleration / timer_skeleton.scale + skeleton_fake_speed_per_joint.data[joint].linear_speed);
+        vec3 const& angular_speed = (skeleton_joint_rotation_speed[joint].avg_rotation_acceleration / timer_skeleton.scale + skeleton_fake_speed_per_joint.data[joint].linear_speed);
+        //vec3 const& linear_speed = (skeleton_speed_per_joint.data[joint].linear_speed / timer_skeleton.scale + skeleton_fake_speed_per_joint.data[joint].linear_speed);
+        //vec3 const& angular_speed = (skeleton_speed_per_joint.data[joint].angular_speed / timer_skeleton.scale + skeleton_fake_speed_per_joint.data[joint].angular_speed);
+
+        // if(norm(linear_speed) > 0.5f){
+        //     std::cout << linear_accel << "accel " << linear_speed << "speed " << skeleton_fake_speed_per_joint.data[joint].linear_speed << "fake "<<std::endl;
+        
+        // }
         vec3 const un_angular_speed = normalize(angular_speed);
 
         float const linear_speed_norm = norm(linear_speed);
@@ -740,11 +747,11 @@ void scene_model::frame_draw(std::map<std::string,GLuint>& , scene_structure& _s
     glClear(GL_DEPTH_BUFFER_BIT);
 
     //    segment_drawer.uniform_parameter.color = {0,0,0};
-    //    if(gui_param.display_joint_speed){
+    //    if(true){
     //        segment_drawer.uniform_parameter.color = {0,0,1};
     //        display_joint_speed(skeleton_current, skeleton_joint_speed, segment_drawer, shaders["segment_im"], scene.camera);
     //    }
-    //    if(gui_param.display_joint_acceleration){
+    //    if(true){
     //        segment_drawer.uniform_parameter.color = {0,1,1};
     //        display_joint_acceleration(skeleton_current, skeleton_joint_speed, segment_drawer, shaders["segment_im"], scene.camera);
     //    }

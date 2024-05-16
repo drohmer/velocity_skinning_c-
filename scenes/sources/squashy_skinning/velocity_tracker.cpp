@@ -84,6 +84,11 @@ void rotation_tracker::add(const quaternion& new_rotation, float time)
 
         avg_rotation_speed = alpha_speed*avg_rotation_speed + (1-alpha_speed)*new_angular_speed;
     }
+    // update acceleration
+    if(counter_initialization>=2) {
+        vec3 const new_acceleration = (avg_rotation_speed-last_speed)/(time - last_time);
+        avg_rotation_acceleration = alpha_acceleration*avg_rotation_acceleration + (1-alpha_acceleration)*new_acceleration;
+    }
 
     // beginning - do not measure speed & acceleration
     if(counter_initialization==1) counter_initialization = 2;
@@ -91,7 +96,7 @@ void rotation_tracker::add(const quaternion& new_rotation, float time)
 
 
     last_rotation = new_rotation;
-    //last_speed = avg_speed;
+    last_speed = avg_rotation_speed;
     last_time = time;
 
 }

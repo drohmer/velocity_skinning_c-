@@ -1,0 +1,4 @@
+# ignore all files with .d as they are not needed and can be compiled later
+*.d
+# Ignore contents of the build file
+/build/*
