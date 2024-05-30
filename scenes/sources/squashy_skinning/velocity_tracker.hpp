@@ -44,8 +44,6 @@ struct rotation_tracker
     vec3 avg_rotation_speed;
     vec3 avg_rotation_acceleration;
 
-    //quaternion avg_rotation_acceleration;
-
     // temporal filter new_speed = alpha*old_speed + (1-alpha)*current_speed
     float alpha_speed = 0.75f;//0.75f;
     float alpha_acceleration = 0.9f;

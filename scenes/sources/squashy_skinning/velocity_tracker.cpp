@@ -86,6 +86,7 @@ void rotation_tracker::add(const quaternion& new_rotation, float time)
     }
     // update acceleration
     if(counter_initialization>=2) {
+        // Calculate the new acceleration based on the new average rotation speed and last speed
         vec3 const new_acceleration = (avg_rotation_speed-last_speed)/(time - last_time);
         avg_rotation_acceleration = alpha_acceleration*avg_rotation_acceleration + (1-alpha_acceleration)*new_acceleration;
     }
